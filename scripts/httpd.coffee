@@ -21,6 +21,8 @@ spawn = require('child_process').spawn
 
 module.exports = (robot) ->
 
+  robot.brain.sent = robot.brain.sent || []
+
   robot.router.get "/hubot/version", (req, res) ->
     res.end robot.version
 
@@ -42,5 +44,8 @@ module.exports = (robot) ->
       res.end body
 
   robot.router.post "/hubot/echo", (req, res) ->
-    robot.messageRoom '#general', req.body.text
+    room = req.body.room || '#general'
+    text = req.body.text
+
+    robot.messageRoom room, text
     res.end 'sent'
