@@ -195,7 +195,7 @@ module.exports = function( robot ) {
                     return msg.send( errMsg );
                 }
 
-                msg.send( 'Snapshot ' + name + 'being created' );
+                msg.send( 'Snapshot ' + name + ' being created' );
             });
         }
 
