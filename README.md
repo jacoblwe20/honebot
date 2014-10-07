@@ -1,37 +1,23 @@
-# Hubot
+# Honebot
 
+Honebot for [Hone's](http://gohone.com) internal slack chat room. He's uber smart and is pretty much a [hubot](https://hubot.github.com/).
 
-Add any script to the /scripts, and add any dependencies to package.json
+## To install
 
-iobot
-=====
-
-Hubot for Riverside.io co-twerking space
-
-Updating iobot:
 ```
-iobot is on a heroku server. Ask someone for permission if you don't have it.
-- Push code to heroku
-- Restart heroku server
-- $ heroku ps:scale web=1
-```
-Roles
-=====
-Checking for a certail role is easy!
-We can get the user's role before executing any code by checking inside the ***msg*** object
-```
-  robot.hear /nest (s|set) (\d{2}).*/i, (msg) ->
-    if 'nest' in msg.message.user.roles
-      // change nest temperature
-    else
-      // talk to an admin
+$ git clone https://github.com/jcblw/honebot.git
+$ cd honebot
+$ npm install
 ```
 
-Setting a role is also easy! (Must be admin)
-```
-iobot *username* has nest role
->> Ok, *username* has the 'nest' role.
+Also if you dont have [redis](https://hubot.github.com/) you might want to install it for honebot's redis brain.
 
-iobot *username* doesn't have nest role
->> Ok, *username* doesn't have 'nest' role.
+## To run
+
 ```
+$ bin/hubot 
+```
+
+Some scripts will want differnt dependencies and enviroments variables. So not all will work out of box you might want to look at the script to see what its expecting
+
+Script are all located in `/scripts` or some are specified in `hubot-scripts.json`.
