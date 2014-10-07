@@ -107,6 +107,115 @@ module.exports = function( robot ) {
 
     } );
 
+    robot.respond( /power off droplet (.+)/i, function( msg ) {
+
+        var name = msg.match[1],
+            user = msg.message.user,
+            droplet;
+
+        if ( !isAble( user ) ) {
+            return msg.send( 'sorry @' + user.name + ' you do not have access to do that' );
+        }
+
+        function rebootDroplet( id ) {
+            dio.droplets.power_off( id, function( err, res ) {
+                if ( err ) {
+                    return msg.send( errMsg );
+                }
+                msg.send( name + ' droplet is powering off.' );
+            } );
+        }
+
+        getDroplets( function( err, droplets ) {
+            if ( err ) {
+                return msg.send( errMsg );
+            }
+
+            droplet = getDropletByName( name );
+
+            if ( !droplet ) {
+                return msg.send( 'No droplet "' + name + '" found.');
+            }
+
+            rebootDroplet( droplet.id );
+
+        } );
+
+    } );
+
+    robot.respond( /power on droplet (.+)/i, function( msg ) {
+
+        var name = msg.match[1],
+            user = msg.message.user,
+            droplet;
+
+        if ( !isAble( user ) ) {
+            return msg.send( 'sorry @' + user.name + ' you do not have access to do that' );
+        }
+
+        function poweronDroplet( id ) {
+            dio.droplets.power_on( id, function( err, res ) {
+                if ( err ) {
+                    return msg.send( errMsg );
+                }
+                msg.send( name + ' droplet is powering on.' );
+            } );
+        }
+
+        getDroplets( function( err, droplets ) {
+            if ( err ) {
+                return msg.send( errMsg );
+            }
+
+            droplet = getDropletByName( name );
+
+            if ( !droplet ) {
+                return msg.send( 'No droplet "' + name + '" found.');
+            }
+
+            poweronDroplet( droplet.id );
+
+        } );
+
+    } );
+
+    robot.respond( /create snapshot (.*) from droplet (.*)/i, function( msg ) {
+        var name = msg.match[1],
+            dropletName = msg.match[2],
+            user = msg.message.user,
+            droplet;
+
+        if ( !isAble( user ) ) {
+            return msg.send( 'sorry @' + user.name + ' you do not have access to do that' );
+        }
+
+        function snapShot( id, name ) {
+            dio.droplets.snapshot( id, name, function( err, res ) {
+                if ( err ) {
+                    return msg.send( errMsg );
+                }
+
+                msg.send( 'Snapshot ' + name + 'being created' );
+            });
+        }
+
+        getDroplets( function( err, droplets ) {
+            if ( err ) {
+                return msg.send( errMsg );
+            }
+
+            droplet = getDropletByName( dropletName );
+
+            if ( !droplet ) {
+                return msg.send( 'No droplet "' + dropletName + '" found.');
+            }
+
+            snapShot( droplet.id );
+
+        } );
+
+    } );
+
     // TODO
 
     // robot.respond( /create droplet (.*) from image (.*)/i, function( msg ) {
