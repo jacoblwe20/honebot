@@ -189,7 +189,7 @@ module.exports = function( robot ) {
             return msg.send( 'sorry @' + user.name + ' you do not have access to do that' );
         }
 
-        function snapShot( id, name ) {
+        function snapShot( id ) {
             dio.droplets.snapshot( id, name, function( err, res ) {
                 if ( err ) {
                     return msg.send( errMsg );
