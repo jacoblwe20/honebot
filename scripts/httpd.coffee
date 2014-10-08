@@ -46,6 +46,15 @@ module.exports = (robot) ->
   robot.router.post "/hubot/echo", (req, res) ->
     room = req.body.room || '#general'
     text = req.body.text
+    id = req.body.id
+    type = req.body.eventType
 
-    robot.messageRoom room, text
-    res.end 'sent'
+    if type is 'error'
+      robot.messageRoom room, text
+      res.end 'sent'
+    else if id not in robot.brain.sent
+      if type is 'restart'
+        text = text + ' | <a href="http://github.com/honeinc/hone/commit/' + id + '">' + id + '</a>' 
+      robot.messageRoom room, text
+      res.end 'sent'
+      robot.brain.sent.push id
