@@ -66,46 +66,6 @@ module.exports = (robot) ->
 
   robot.auth = new Auth
 
-  # These are mainly for dubugging purposes
-  robot.respond /who am i\?*$/i, (msg) ->
-    msg.reply 'you are ' + msg.message.user.name.toString() + ' to me at least.'
-
-  robot.respond /can you fix my roles\?$/i, ( msg ) ->
-    user = msg.message.user
-    name = user.name
-    storedUser = robot.auth.getUserByName( name )
-
-    if storedUser and user and storedUser.id isnt user.id
-      success = null
-      error = null
-      try
-        roles = robot.brain.data.users[ user.id ].roles or [];
-        robot.brain.data.users[ user.id ].roles = roles.concat( storedUser.roles or [] )
-        delete robot.brain.data.users[ storedUser.id ];
-        success = true
-      catch e
-        success = null
-        error = e
-
-      if success
-        msg.reply "Your all fixed up #{name}"
-      else
-        if error
-          msg.reply "I made a mess: " + e.message
-        else
-          msg.reply "Sorry wasnt able to fix that for you"
-
-    else
-      msg.reply "It does not seem that your having any issues"
-
-  robot.respond /what do you know about me\?*$/i, ( msg ) ->
-    user = robot.auth.getUserByName( msg.message.user.name )
-    if user
-      msg.reply JSON.stringify( user, null, '\t' )
-    else
-      msg.reply 'Nothing your off the grid ;-)'
-
-
   robot.respond /@?(.+) (has) (["'\w: -_]+) (role)/i, (msg) ->
     name    = msg.match[1].trim()
     newRole = msg.match[3].trim().toLowerCase()

@@ -55,7 +55,7 @@ module.exports = (robot) ->
     
     else  
       if type is 'restart'
-        text = text + ' | <http://github.com/honeinc/hone/commit/' + id + '|' + id + '>'
+        text = text + ' ~ http://github.com/honeinc/hone/commit/' + id + '|' + id 
 
       robot.messageRoom room, text
       res.end 'sent'
