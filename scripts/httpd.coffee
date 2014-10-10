@@ -52,9 +52,10 @@ module.exports = (robot) ->
     if type is 'error'
       robot.messageRoom room, text
       res.end 'sent'
-    else if id not in robot.brain.sent
+    
+    else  
       if type is 'restart'
-        text = text + ' | <a href="http://github.com/honeinc/hone/commit/' + id + '">' + id + '</a>' 
+        text = text + ' | <http://github.com/honeinc/hone/commit/' + id + '|' + id + '>'
+
       robot.messageRoom room, text
       res.end 'sent'
-      robot.brain.sent.push id
