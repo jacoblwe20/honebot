@@ -1,5 +1,7 @@
 # Honebot
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jcblw/honebot.svg)](https://greenkeeper.io/)
+
 Honebot for [Hone's](http://gohone.com) internal slack chat room. He's uber smart and is pretty much a [hubot](https://hubot.github.com/).
 
 ## To install
